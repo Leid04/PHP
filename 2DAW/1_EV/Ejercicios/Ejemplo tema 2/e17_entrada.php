@@ -18,7 +18,7 @@
 	</select>
 	<label for="selAsignatura">Curso</label>
 
-	<select name="asignaturas[]" id="selAsignatura" multiple="multiple">
+	<select name="asignaturas[]" id="selAsignatura" multiple>
 		<option value="DWES">DWES</option>
 		<option value="DWEC">DWEC</option>
 		<option value="DI">DI</option>

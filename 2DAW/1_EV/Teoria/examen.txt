@@ -1,0 +1,13 @@
+	lenguaje php
+		tipos de datos (casting)
+		caracteristicas
+		logica de control(bucles condiciones...)
+		funciones PHP y propias
+Teoria
+-Características del entorno cliente y servidor(que partes en cliente que en servidor, tipo de arquitectura y para que sirve, el como)
+-Características de PHP(encontrar, que muestra por pantall, que sucede si la linea desaparece, 
+como hagas para que en la pantalla salga no se que)
+-Interpretar y modificar codigo
+-printf / var_dump
+-arrays
+-Formularios envio recepcion y validacion

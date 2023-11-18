@@ -1,18 +1,18 @@
 <?php
     for($i = 1; $i<=100; $i++){
-        $y = $i;
-        $cont = 0; 
-        $cont2 = 0;
-        while($y>0){
-            if($i % $y == 0){
-                $cont++;
+        $operando = $i;
+        $divisores = 0; 
+        $primos = 0;
+        while($operando>0){
+            if($i % $operando == 0){
+                $divisores++;
             }
-            $y--;
+            $operando--;
         }
-        if($cont == 2){
+        if($divisores == 2){
             echo "El numero: " . $i . " es numero primo" . "<br>";
-            $cont2 += 1;
+            $primos += 1;
         }
-        $cont = 0;
+        $divisores = 0;
     }
 ?>

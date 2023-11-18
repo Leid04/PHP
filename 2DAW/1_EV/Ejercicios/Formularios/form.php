@@ -14,10 +14,10 @@
         ];
     ?>
     <form action="alta_cita.php" method="POST">
-        <input name="nombre" type="text" placeholder="Nombre" minlength="2" maxlength="20" required><br> 
-        <input name="NTS" type="number" placeholder="Num de Tarjeta Sanitaria" minlength="14" maxlength="14" required><br>
-        <input name="FN" type="number" placeholder="Fª nacimiento" min="1920" max="2023"><br>
-        <input name="FCQ" type="datetime" placeholder="Fª de cita que quiere" required><br><br>
+        <input name="nombre" type="text" placeholder="Nombre" pattern="[A-Za-z\s]{3,20}" required><br> 
+        <input name="NTS" type="text" placeholder="Num de Tarjeta Sanitaria" pattern="[0-9]{14}" required><br><!--text para evitar problemas con los 0-->
+        <input name="FN" type="date" placeholder="Fª nacimiento" min="<?php echo date('Y') - 103; ?>" max="<?php echo date('Y'); ?>">
+        <input name="FCQ" type="date" min="<?php echo date('d-m-Y', strtotime('+3 days')); ?>" required><br><br>
 
         <label for="condiciones" name="rRadio">Aceptas las condiciones de seguridad:
             <input type="radio" name="condiciones" value="Si" required>Si

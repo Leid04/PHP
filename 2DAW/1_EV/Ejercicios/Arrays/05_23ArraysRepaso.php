@@ -137,6 +137,10 @@
         }
     }
     echo "La palabra manzana aparece en el array $cont veces!";
+    //o tambien 
+    $veces = array_keys($frutas, "manzana");//devolvera indices, si es mas de uno devuele array de indices.
+    $vecesAparece = count($veces);
+
 
     //14. Ordenar el array en orden ascendente y luego en orden descendente.
     $notas = array(8, 7, 6, 9, 5);
@@ -232,6 +236,15 @@
         }
         $frutasCantidad[$frutas[$i]] = $contadorFruta;
     }
+    //o tambien
+    foreach($frutas as $fruta){
+        $aparece = array_keys($frutas, $fruta);
+        $vecesAparece = count($aparece);
+        $frutassss[$fruta] = $vecesAparece;
+    }
+
+
+
     print_r($frutasCantidad);
 
     //20. Crear un nuevo array que contenga los nombres ordenados alfabéticamente.
@@ -265,4 +278,20 @@
         }
     }
     print_r($nombresLargos);
+    
+
+    //24.Recibe arrays y devuelve solo uno unido.
+    function unidos(...$param){
+        $nuevo = [];
+        foreach($param as $posibleArray){
+            if(!is_array($posibleArray)){
+                foreach($posibleArray as $k => $v){
+                    $nuevo [$k] = $v;
+                }
+            }else{
+                return null;
+            }            
+        }
+        return $nuevo;
+    }
 ?>
