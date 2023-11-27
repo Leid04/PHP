@@ -43,7 +43,7 @@
         fclose($fichero);
         echo "Se ha añadido correctamente";
         function proteger($valor){//Creo una función por si en futuro para proteger de la inyección se añada más código.  
-            //Aquí el código de protección de la inyección si es preciso.
+            //Aquí el código de protección de la inyección si es necesario.
             return htmlspecialchars(trim($valor));
         }                
     }
