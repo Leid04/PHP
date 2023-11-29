@@ -1,49 +1,38 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Formulario básico</title>
+        <link rel="stylesheet" href="styles/login.css">
     </head>
     <body>
         <?php
-        $resultado = false;
-            if($_SERVER['REQUEST_METHOD'] == "POST"){
-                if(!empty("sumbit")){
-                    $user = htmlspecialchars(trim($_POST['user']));
-                    $password = htmlspecialchars(trim($_POST['password']));
-                    //id_user,password,nombre,apellido
-                    
-                    $fichero = fopen(__DIR__ . "/files/micsv.csv", "r");
-                    while(!feof($fichero)){
-                        $linea = fgets($fichero);
-                        $datos = explode($linea, ",");
-                        if($user === $datos['id_user'] && $password === $datos['password']){
-                            //OCULTAR EL FORMULARIO
-                            echo "<p>Hola {$datos['nombre']} {$datos['apellido']}</p>";
-                            $resultado = true;
-                        }
-                    }
-                    if($resultado){
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $user = htmlspecialchars(trim($_POST['user']));
+                $password = htmlspecialchars(trim($_POST['password']));
+                $resultado = false;
 
+                $fichero = fopen(__DIR__ . "/files/micsv.csv", "r");
+                while (!feof($fichero)) {
+                    $linea = fgets($fichero);
+                    $datos = explode(",", $linea);
+                    if ($user === $datos[0] && $password === $datos[1]) {
+                        $resultado = true;
+                        echo "<p>Hola $datos[2] $datos[3]</p>";
+                        break;
                     }
-                    //Si el usuario no existe y/o la contraseña no es correcta, se mostrará el formulario de nuevo y un mensaje de error
-                }else{
-                    echo "<h1>No se ha enviado el formulario correctamente.</h1>";
                 }
+                fclose($fichero);
+                echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; // oculto el formulario
             }
-        ?><?php
-      if(!$resultado){?>
-        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" name="formulario">
-            <label for="user">Tu usuario: </label>
-                <input type="text" name="user"><br><br>
-            <label for="password">Contraseña: </label>
-                <input type="password" name="password"><br><br>
-            <button type="submit">Enviar</button><br>
-        </form>
-      <?php } ?>
+        ?>
+    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" name="formulario">
+        <label for="user">Tu usuario: </label>
+        <input type="text" name="user"><br>
+        <label for="password">Contraseña: </label>
+        <input type="password" name="password"><br>
+        <button type="submit" name="submit">Enviar</button><br>
+    </form>
     </body>
 </html>
-
