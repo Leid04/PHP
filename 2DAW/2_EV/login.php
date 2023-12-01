@@ -24,7 +24,6 @@
                         echo "<p>Hola $datos[2] $datos[3]</p>";
                         $_SESSION['nombre'] = $datos[2];
                         $_SESSION['apellido'] = $datos[3];
-                        var_dump($_SESSION);
                         break;
                     } 
                 }
