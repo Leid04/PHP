@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta name = "author" content = "Denys">
+        <meta charset = "UTF-8">
+        <title>Empleados</title>
+    </head>
+    <body>
+        <form action ="validacion.php" method = "POST">
+            <label for = "nombre">Nombre: </label>
+                <input type = "text" name = "nombre" placeholder = "Tu nombre" pattern = "[A-Za-zñÑáéíóúÁÉÍÓÚ]{2,20}" required><br><br>
+            <label for = "edad">Edad: </label>
+                <input type = "number" name = "edad" placeholder = "Tu edad" pattern = "[0-9]{2}" required><br><br>
+            <label for = "salario">Salario: </label>
+                <input type = "number" name = "salario" placeholder = "Salario" pattern = "[0-9]{2,4}" required><br><br>
+            <button type="submit">Enviar</button>
+        </form>
+    </body>
+</html>
