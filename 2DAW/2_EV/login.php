@@ -4,16 +4,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Formulario básico</title>
-        <link rel="stylesheet" href="styles/login.css">
+        <link rel="stylesheet" href="src/styles/login.css">
     </head>
     <body>
         <?php
+        //Meter el user cuando haga el login en sesion y probarlo en otros phps 
+            session_start();//Guardo la sesión.
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $user = htmlspecialchars(trim($_POST['user']));
                 $password = htmlspecialchars(trim($_POST['password']));
+                $fichero = fopen(__DIR__ . "/src/files/micsv.csv", "r");
                 $resultado = false;
-
-                $fichero = fopen(__DIR__ . "/files/micsv.csv", "r");
+                
                 while (!feof($fichero)) {
                     $linea = fgets($fichero);
                     $datos = explode(",", $linea);
