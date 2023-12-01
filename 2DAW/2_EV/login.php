@@ -22,8 +22,11 @@
                     if ($user === $datos[0] && $password === $datos[1]) {
                         $resultado = true;
                         echo "<p>Hola $datos[2] $datos[3]</p>";
+                        $_SESSION['nombre'] = $datos[2];
+                        $_SESSION['apellido'] = $datos[3];
+                        var_dump($_SESSION);
                         break;
-                    }
+                    } 
                 }
                 fclose($fichero);
                 echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; // oculto el formulario
