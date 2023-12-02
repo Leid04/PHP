@@ -24,7 +24,7 @@
                         $_SESSION['nombre'] = $datos[2];
                         $_SESSION['apellido'] = $datos[3];
                         fclose($fichero);
-                        header("Location: 0.php");//Redirección
+                        header("Location: 0.php");//Redirección porque esta todo correcto.
                         exit;
                     } 
                 }
