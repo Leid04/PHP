@@ -28,22 +28,25 @@
                         $_SESSION['apellido'] = $datos[4];
                         $_SESSION['perfil'] = ($datos[5] == 1)? "Profesor" : "Alumno";
                         
+                        $numeroMensajesEnviados = 0;
+                        $numeroMensajesRecibidos = 0;
                         while(!feof($mensajes)){
                             
                             $lineaMensaje = fgets($mensajes);
                             $mensajesUser = explode(",", $lineaMensaje);
 
-                            $numeroMensajes = 0;
-                            ($mensajesUser[1] === $datos[0])? $numeroMensajes++ : "";
+                            //Leer la cantidad de mensajes
+                            $numeroMensajesRecibidos = 0;
+                            if ($mensajesUser[1] === $datos[0]) {
+                                $numeroMensajesRecibidos++;
+                                $_SESSION['mensajesRecibidos'][$numeroMensajesRecibidos] = "Mensaje: " . $mensajesUser[3] . "Hora: " . $mensajesUser[4];
+                            }
 
-                            //$mensajesRecibidos = [];
-                            //$mensajesEnviados = [];
                             if($mensajesUser[0] === $datos[0]){
-
+                                $numeroMensajesEnviados++;
+                                $_SESSION['mensajesEnviados'][$numeroMensajesEnviados] = "Mensaje: " . $mensajesUser[3] . "Hora: " . $mensajesUser[4];  
                             }
-                            if($mensajesUser[1] === $datos[0]){
-
-                            }
+ 
 
                             $_SESSION['numMensajes'] = $numeroMensajes;
                         }
