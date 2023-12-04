@@ -14,6 +14,8 @@
             if (!empty($_SESSION['nombre']) && !empty($_SESSION['apellido'])) {
                 $nombre = $_SESSION['nombre'];
                 $apellido = $_SESSION['apellido'];
+                $perfil = $_SESSION['perfil'];
+                $mensajes = $_SESSION['numMensajes'];
                 $resultado = true;
             } else {
                 header("Location: login.php");//Si no esta la sesion iniaciada pues redirigir al inicio.
