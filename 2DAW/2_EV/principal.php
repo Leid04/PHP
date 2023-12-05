@@ -2,74 +2,26 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
+        <meta name="author" content="Denys Revutskyi 2-DAW">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Header</title>
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-            }
-
-            header {
-                background-color: #333;
-                color: #fff;
-                padding: 10px;
-                text-align: center;
-            }
-
-            header a {
-                color: #fff;
-                text-decoration: none;
-                margin: 0 10px;
-                padding: 5px 10px;
-                border-radius: 5px;
-            }
-
-            header a:hover { text-decoration: underline; }
-            header h1 { margin: 0;}
-
-            main {
-                max-width: 800px;
-                margin: 20px auto;
-                padding: 20px;
-                background-color: #fff;
-                box-shadow: 0 0 10px rgba(134, 16, 16, 0.1);
-            }
-
-            footer {
-                background-color: #333;
-                color: #fff;
-                text-align: center;
-                padding: 10px;
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-            }
-
-            .contenedor {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px;
-            }
-        </style>
+        <link rel="stylesheet" href="src/styles/principal.css">
     </head>
     <body>
         <?php
             session_start();
 
             $resultado = false;
-            if (!empty($_SESSION['nombre']) && !empty($_SESSION['apellido'])) {
+            if (!empty($_SESSION['nombre']) && !empty($_SESSION['apellido'])) {//Comprueba si está todo bien.
+                //Guarda valores
                 $nombre = $_SESSION['nombre'];
                 $apellido = $_SESSION['apellido'];
                 $perfil = $_SESSION['perfil'];
                 $mensajes = $_SESSION['numMensajes'];
                 $resultado = true;
             } else {
-                header("Location: login.php");//Reenvía si no se ha iniciado sesión
-                exit;
+                header("Location: login.php");//Reenvía si no se ha iniciado sesión.
+                exit;//Y sal.
             }
         ?>
         <header>
@@ -84,6 +36,6 @@
         <main>
             <div>movidas</div>
         </main>
-        <footer>2023 - Todos los derechos reservados</footer>
+        <footer>2023 - Denys Revutskyi</footer>
     </body>
 </html>
