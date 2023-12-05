@@ -12,17 +12,18 @@
 
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $correo = htmlspecialchars(trim($_POST['correo']));
-                $password = htmlspecialchars(trim($_POST['password']));
-                
+                $password = md5(htmlspecialchars(trim($_POST['password'])));
+
                 $mensajes = fopen(__DIR__ . "/src/files/mensajes_aula_virtual.csv", "r");
                 $users = fopen(__DIR__ . "/src/files/users_aula_virtual.csv", "r");
-                
+
                 $resultado = false;
 
                 while (!feof($users)) {
                     $linea = fgets($users);
                     $datos = explode(",", $linea);
-                    if ($correo === $datos[1] && md5($password) === $datos[2]){
+
+                    if ($correo === $datos[1] && $password === $datos[2]){
                         $resultado = true;
                         $_SESSION['nombre'] = $datos[3];
                         $_SESSION['apellido'] = $datos[4];
@@ -30,44 +31,41 @@
                         
                         $numeroMensajesEnviados = 0;
                         $numeroMensajesRecibidos = 0;
-                        while(!feof($mensajes)){
-                            
+
+                        while(!feof($mensajes)) {
                             $lineaMensaje = fgets($mensajes);
                             $mensajesUser = explode(",", $lineaMensaje);
 
-                            //Leer la cantidad de mensajes
-                            $numeroMensajesRecibidos = 0;
+                            // Leer la cantidad de mensajes
                             if ($mensajesUser[1] === $datos[0]) {
                                 $numeroMensajesRecibidos++;
-                                $_SESSION['mensajesRecibidos'][$numeroMensajesRecibidos] = "Mensaje: " . $mensajesUser[3] . "Hora: " . $mensajesUser[4];
+                                $_SESSION['mensajesRecibidos'][$numeroMensajesRecibidos] = "Mensaje: " . $mensajesUser[3] . " Hora: " . $mensajesUser[4];
                             }
 
-                            if($mensajesUser[0] === $datos[0]){
+                            if ($mensajesUser[0] === $datos[0]) {
                                 $numeroMensajesEnviados++;
-                                $_SESSION['mensajesEnviados'][$numeroMensajesEnviados] = "Mensaje: " . $mensajesUser[3] . "Hora: " . $mensajesUser[4];  
+                                $_SESSION['mensajesEnviados'][$numeroMensajesEnviados] = "Mensaje: " . $mensajesUser[3] . " Hora: " . $mensajesUser[4];
                             }
- 
-
-                            $_SESSION['numMensajes'] = $numeroMensajes;
                         }
-                        
+
+                        $_SESSION['numMensajes'] = $numeroMensajesRecibidos + $numeroMensajesEnviados;
+
                         fclose($users);
                         fclose($mensajes);
-                        header("Location: 0.php");//Redirección porque esta todo correcto.
+                        header("Location: 0.php"); // Redirección porque está todo correcto.
                         exit;
-                    } 
+                    }
                 }
-                fclose($fichero);
                 fclose($users);
-                echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; // oculto el formulario
+                echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; // Oculto el formulario
             }
         ?>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" name="formulario">
-        <label for="correo">Tu correo: </label>
-            <input type="text" name="correo" require><br>
-        <label for="password">Contraseña: </label>
-            <input type="password" name="password" require><br>
-        <button type="submit" name="submit">Enviar</button><br>
-    </form>
+        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" name="formulario">
+            <label for="correo">Tu correo: </label>
+            <input type="text" name="correo" required><br>
+            <label for="password">Contraseña: </label>
+            <input type="password" name="password" required><br>
+            <button type="submit" name="submit">Enviar</button><br>
+        </form>
     </body>
 </html>
