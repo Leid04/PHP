@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Formulario básico</title>
         <link rel="stylesheet" href="src/styles/login.css">
+        <script src="src/files/login.js"></script>
     </head>
     <body>
         <?php
@@ -76,11 +77,11 @@
             }               
 
         ?>
-        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" name="formulario">
+        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" name="formulario" onsubmit="return validarDatos()">
             <label for="correo">Tu correo: </label>
-            <input type="text" name="correo" required><br>
+                <input type="text" name="correo" required><br>
             <label for="password">Contraseña: </label>
-            <input type="password" name="password" required><br>
+                <input type="password" name="password" required><br>
             <button type="submit" name="submit">Enviar</button><br>
         </form>
     </body>
