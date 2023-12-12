@@ -20,7 +20,7 @@
                 $mensajes = $_SESSION['numMensajes'];
                 $resultado = true;
             } else {
-                header("Location: login.php");//Reenvía si no se ha iniciado sesión.
+                header("Location: login.html");//Reenvía si no se ha iniciado sesión.
                 exit;//Y sal.
             }
         ?>
