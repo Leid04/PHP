@@ -45,8 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             fclose($users);
             fclose($mensajes);
-            header("Location: principal.php");//Redirecciona porque está todo correcto.
-            exit;
+            echo json_encode(array("nombre" => $_SESSION['nombre']));
+            //header("Location: principal.php");//Redirecciona porque está todo correcto.
+            //exit;
         }
     }
     fclose($users);

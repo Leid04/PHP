@@ -1,7 +1,8 @@
-const EVENTOS = new EventManager();
 let correo = document.querySelector("input[name='correo']").value;
 let password = document.querySelector("input[name='password']").value;
 let boton = document.querySelector("button[name='submit']").value;
+const EVENTOS = new EventManager();
+
 boton.addEventListener("click", function (event) {
     event.preventDefault();
     realizarSolicitud();
