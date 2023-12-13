@@ -1,8 +1,11 @@
-// Función para capturar los valores del correo y la contraseña
-function capturarDatos() {
-    correo = document.querySelector("input[name='correo']").value;
-    password = document.querySelector("input[name='password']").value;
-}
+const EVENTOS = new EventManager();
+let correo = document.querySelector("input[name='correo']").value;
+let password = document.querySelector("input[name='password']").value;
+let boton = document.querySelector("button[name='submit']").value;
+boton.addEventListener("click", function (event) {
+    event.preventDefault();
+    realizarSolicitud();
+});
 
 // Función para realizar la solicitud AJAX
 function realizarSolicitud() {
@@ -15,11 +18,10 @@ function realizarSolicitud() {
 
         fetch("login.php", opciones)
             .then(responses => isResponseOk(responses))
-            .then(data => leerDatos(data))
-            .catch(er => leerErrores(er));
+            .then(data => getData(data))
+            .catch(er => getErrors(er));
     }
 }
-realizarSolicitud();
 // Funciones para AJAX
 const isResponseOk = (responses) => {
     if (!responses.ok)
@@ -27,19 +29,18 @@ const isResponseOk = (responses) => {
     return responses.json();
 };
 
-const leerDatos = (data) => {
+const getData = (data) => {
     let bienvenida = document.createElement("p");
     bienvenida.textContent = "Inicio de sesión exitoso, hola " + data.nombre;
     document.body.appendChild(bienvenida);
 };
 
-const leerErrores = (er) => {
+const getErrors = (er) => {
     console.error("Ha habido el siguiente error: " + er);
 };
 
 // Código para validar datos
 function validarDatos() {
-    capturarDatos();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
