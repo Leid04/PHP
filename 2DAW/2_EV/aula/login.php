@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $correo = htmlspecialchars(trim($_POST['correo']));
     $password = md5(htmlspecialchars(trim($_POST['password'])));
@@ -45,13 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             fclose($users);
             fclose($mensajes);
-            echo json_encode(array("nombre" => $_SESSION['nombre']));
+
+            $data = $_SESSION;
+            echo json_encode($data);
             //header("Location: principal.php");//Redirecciona porque está todo correcto.
-            //exit;
+            exit;
         }
     }
+    // Si llegamos aquí, significa que no se encontró el usuario
     fclose($users);
-    echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; //Oculta el formulario
+    echo json_encode(["error" => "Usuario no encontrado"]);
+    //echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; //Oculta el formulario
 }
 function fnNombre($id) {//Encuentra el nombre de id en otro archivo.
     $usersTemp = fopen(__DIR__ . "/src/files/users_aula_virtual.csv", "r");

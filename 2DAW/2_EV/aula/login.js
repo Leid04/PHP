@@ -1,15 +1,21 @@
-let correo = document.querySelector("input[name='correo']").value;
-let password = document.querySelector("input[name='password']").value;
-let boton = document.querySelector("button[name='submit']").value;
-const EVENTOS = new EventManager();
+document.addEventListener("DOMContentLoaded", () => {
+    let boton = document.querySelector("button[name='submit']");
 
-boton.addEventListener("click", function (event) {
-    event.preventDefault();
-    realizarSolicitud();
+    // Verifica si el botón fue encontrado antes de asignar el evento
+    if (boton) {
+        boton.addEventListener("click", function (event) {
+            event.preventDefault();
+            realizarSolicitud();
+        });
+    } else {
+        console.error("Botón no encontrado");
+    }
 });
 
 // Función para realizar la solicitud AJAX
 function realizarSolicitud() {
+    let correo = document.querySelector("input[name='correo']").value;
+    let password = document.querySelector("input[name='password']").value;
     if (validarDatos()) {
         const opciones = {
             method: "POST",
@@ -37,12 +43,13 @@ const getData = (data) => {
 };
 
 const getErrors = (er) => {
-    console.error("Ha habido el siguiente error: " + er);
+    console.error("Ha habido un error inesperado:", er);
 };
 
 // Código para validar datos
 function validarDatos() {
-
+    let correo = document.querySelector("input[name='correo']").value;
+    let password = document.querySelector("input[name='password']").value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(correo)) {
