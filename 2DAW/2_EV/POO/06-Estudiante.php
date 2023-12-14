@@ -7,7 +7,7 @@
         public $edad;
         public $materias;
 
-        function __construct($nombre, $edad, $materias){
+        function __construct($nombre, $edad, Array $materias){
             $this->nombre = $nombre;
             $this->edad = $edad;
             $this->materias = $materias;
