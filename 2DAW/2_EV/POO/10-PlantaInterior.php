@@ -1,39 +1,29 @@
 <?php
-trait CuidadosPlanta {
-    function regar(){
-        echo "Regando";
+    trait CuidadosPlanta {
+        function regar(){ echo "Regando desde cuidados planta.\n"; }
+        function podar(){ echo "Podando desde cuidados planta.\n"; }
     }
-    function podar(){
-        echo "Podando";
+    trait Jardineria {
+        function regar(){   echo "Regando desde cuidados jardineria.\n"; }
+        function plantar(){ echo "Plantando desde cuidados jardineria.\n"; }
+        function podar(){   echo "Podando desde cuidados jardineria.\n"; }
     }
-}
-trait Jardineria {
-    function regar(){
-        echo "Regando";
+    class PlantaInterior{
+        use CuidadosPlanta, Jardineria{
+            CuidadosPlanta::regar insteadOf Jardineria;
+            Jardineria::plantar  insteadOf CuidadosPlanta;
+            Jardineria::podar  insteadOf CuidadosPlanta;
+        }
+        function cuidaInteriores(){
+            $this->regar();
+            $this->plantar();
+            $this->podar();
+        }
     }
-    function plantar(){
-        echo "Plantando";
+    class PlantaExterior{
+        use CuidadosPlanta{
+            Jardineria::regar insteadOf CuidadosPlanta;
+        }
+        function cuidaExterior(){ $this->regar(); }
     }
-    function podar(){
-        echo "Podando";
-    }
-}
-class PlantaInterior{
-    use CuidadosPlanta, Jardineria{
-        CuidadosPlanta::regar insteadOf Jardineria;
-        Jardineria::plantar  insteadOf CuidadosPlanta;
-        Jardineria::podar  insteadOf CuidadosPlanta;
-    }
-}
-class PlantaExterior{
-    use CuidadosPlanta;
-}
-$planta1 = new PlantaInterior();
-$planta2 = new PlantaInterior();
-
-$planta1->regar();
-$planta1->podar();
-
-$planta2->regar();
-$planta2->podar();
 ?>
