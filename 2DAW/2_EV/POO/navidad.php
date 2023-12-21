@@ -1,11 +1,12 @@
 <?php
-    class Regalo{//Falta lo de unica la referencia y la constante
+    class Regalo{//Falta lo de unica la referencia
         private $referencia, $descripcion, $edadDesde;
+        const SINREGALO = "Carbón";
         function __construct($referencia, $descripcion, $edadDesde = 0){
             if($referencia === 'A00000'){
                 $this->referencia = $referencia;
                 $this->edadDesde = 0;
-                $this->descripcion = 0;
+                $this->descripcion = self::SINREGALO;
             }else{  
                 if(strlen($referencia) < 6){
                     echo "No puedo asignar la referencia, ya que es menor que 6";
