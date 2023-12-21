@@ -1,34 +1,22 @@
 <?php
-    class Regalo{//Falta lo de unica la referencia
+    class Regalo{
         private $referencia, $descripcion, $edadDesde;
         const SINREGALO = "Carbón";
         function __construct($referencia, $descripcion, $edadDesde = 0){
-            if($referencia === 'A00000'){
+            if(strtoupper($referencia) === 'A00000'){
                 $this->referencia = $referencia;
                 $this->edadDesde = 0;
                 $this->descripcion = self::SINREGALO;
-            }else{  
-                if(strlen($referencia) < 6){
-                    echo "No puedo asignar la referencia, ya que es menor que 6";
-                }else{
-                    $this->referencia = $referencia;
-                    echo "La referencia es: $referencia";
-                }
+            }else{ 
+                $this->referencia = (strlen($referencia) === 6)? $referencia : 0;
+                $this->edadDesde = is_numeric($edadDesde)? $edadDesde : 0;
                 $this->descripcion = $descripcion;
-                if(is_numeric($edadDesde)){
-                    $this->descripcion = $descripcion;
-                    echo "La descripcion es: $descripcion";
-                }else{
-                    echo "Tienes que proporcionar edad en número.";
-                }
             }            
         }
-        function getDescripcion(){
-            return $this->descripcion;
-        }
-        function getEdadDesde(){
-            return $this->edadDesde;
-        }
+        //Funciones get para el manejo preciso de variables privadas.
+        function getDescripcion(){  return $this->descripcion; }
+        function getReferencia(){   return $this->referencia; }
+        function getEdadDesde(){    return $this->edadDesde; }
     }
 //---------------------------------------------------------------------------------------------------------------------------------
     class Persona{
@@ -36,7 +24,7 @@
         function __construct($nombre, $anioNac, $esBuena, $regalo = null){
             //Validaciones
             if((is_integer($anioNac)) && (strlen(strval($anioNac)) == 4)){
-                $this->edad = intval(('Y') - $anioNac);
+                $this->edad = intval(date('Y') - $anioNac);
             }else{ echo "Tienes que proporcionar un año de nacimiento válido, ej: 2004";}
 
             if(is_bool($esBuena)){
@@ -49,8 +37,8 @@
 
         function abrirRegalo(){
             echo "$this->nombre tiene $this->edad años, 
-            se ha portado" . ($this->esBuena)? "bien" : "mal" . " y ha recibido 
-            {$this->regalo->getDescripcion}";
+            se ha portado" . ($this->esBuena ? " bien " : " mal ") . " y ha recibido 
+            {$this->regalo->getDescripcion()}<br>";
         }
 
         function setRegalo(Object $regalo){ $this->regalo = $regalo; }
@@ -75,7 +63,7 @@
         }
         function repartirRegalos(Array $personas){
             foreach($personas as $persona){
-                $esBuena = ($persona->getEsBuena())? true : false;
+                $esBuena = $persona->getEsBuena();//Da true o false
                 if($esBuena){
                     $edadPersona = $persona->getEdad();
                     do{
@@ -83,8 +71,9 @@
                         $edadRegalo = $regalo->getEdadDesde();
                     }while($edadPersona < $edadRegalo);
                     $persona->setRegalo($regalo);
-                }else{
-                    $regalo = new Regalo('A00000', 'Sin regalo', 0);
+                }else{//Si es mala no hago nada y le doy el regalo de carbon.
+                    $regaloCarbon = new Regalo('A00000', 'Sin regalo', 0);
+                    $persona->setRegalo($regaloCarbon);
                 }
             }
         }
@@ -100,7 +89,7 @@
     ];
     $santa->repartirRegalos($personas);
 
-    foreach($personas as $persona){
-        $persona->abrirRegalo();
+    foreach($personas as $persona){ 
+        $persona->abrirRegalo(); 
     }
 ?>
