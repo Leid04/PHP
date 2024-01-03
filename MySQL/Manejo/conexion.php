@@ -2,6 +2,11 @@
   // Definir las credenciales de la base de datos: hostname, username, password y nombre de la base de datos.
   $conexion = mysqli_connect('localhost', 'denys', '', 'pruebas');
 
+  // Verificar si la conexión fue exitosa.
+  if (!$conexion) {
+      die("La conexión falló: " . mysqli_connect_error());
+  }
+
   // Definir una consulta de inserción en la tabla 'users' con valores para 'name' y 'email'.
   $insert = 'INSERT INTO users (name, email) VALUES ("denys", "denys@gmail.com")';
 
