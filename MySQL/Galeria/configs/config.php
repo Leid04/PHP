@@ -1,5 +1,5 @@
 <?php
-  $conexion = [
+  $bbdd = [
     'database' => [
       'host'     => 'localhost',
       'username' => 'denys',
