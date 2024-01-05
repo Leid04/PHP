@@ -9,18 +9,18 @@
     <div class="col-lg-12 text-lett">
       <div class="col-lg-2 text-left"></div>
       <div class="col-lg-10 text-left">
-        <form>
+        <form action="./accion.php" method="POST">
           <div class="mb-3">
               <label for="nombre" class="form-label">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre">
           </div>
           <div class="mb-3">
               <label for="email" class="form-label">Correo Electrónico:</label>
-              <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico">
+              <input type="email" class="form-control" id="email" name="email"placeholder="Ingrese su correo electrónico">
           </div>
           <div class="mb-3">
               <label for="password" class="form-label">Contraseña:</label>
-              <input class="form-control" id="password" rows="4" placeholder="Contraseña"></input>
+              <input class="form-control" id="password" rows="4" name="password" placeholder="Contraseña"></input>
           </div>
           <button type="submit" class="btn btn-primary">Enviar</button>
         </form>

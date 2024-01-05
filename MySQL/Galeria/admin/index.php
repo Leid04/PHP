@@ -14,10 +14,10 @@
             $page = $_GET['page'];
             switch($page){
               case 'login': 
-                include "includes/login.inc.php";
+                include "./login.php";
                 break;
               case 'new': 
-                include "includes/new.inc.php";
+                include "./registro.php";
                 break;
             }
           ?>
