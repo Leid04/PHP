@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             fclose($mensajes);
 
             $data = $_SESSION;
+            print_r($data);
             echo json_encode($data);
             //header("Location: principal.php");//Redirecciona porque está todo correcto.
             exit;
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     // Si llegamos aquí, significa que no se encontró el usuario
     fclose($users);
-    echo json_encode(["error" => "Usuario no encontrado"]);
+    echo json_encode(array("error" => "Usuario no encontrado"));
     //echo ($resultado) ? "<style>form{display: none;}</style>" : "<p>Error de usuario.</p>"; //Oculta el formulario
 }
 function fnNombre($id) {//Encuentra el nombre de id en otro archivo.
