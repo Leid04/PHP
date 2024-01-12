@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Listado animales</title>
   </head>
   <body>
     <?php
@@ -37,9 +37,7 @@
       const borrarAnimal = (animalId) => {
         const options = {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json'},
           body: JSON.stringify({ id: animalId }),
         }
         const getData = (data) => {
@@ -58,7 +56,7 @@
         if (confirm("Enserio quieres borrar este animal?")) {
           fetch('borrar_animal.php', options)
           .then(response => response.json())
-          .then(data => getData())
+          .then(data => getData(data))
           .catch(error => getError());
         }
       }

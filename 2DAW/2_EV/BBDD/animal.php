@@ -1,17 +1,36 @@
 <?php
-  class Animal{
-    private $id, $nombre, $especie, $edad;
-    public function __construct($nomb, $esp, $ed) {
-      $this->nombre = $nomb;
-      $this->especie = $esp;
-      $this->edad = $ed;
+class Animal {
+    private $dbConnection;
+
+    private function __construct() {
+        $this->dbConnection = new mysqli("localhost", "usuario", "contrasena", "basededatos");
+        if ($this->dbConnection->connect_error) {
+            die("Error de conexión a la base de datos: " . $this->dbConnection->connect_error);
+        }
     }
-    public function getId(){ return $this->id;}
-    public function getNombre() {
-      return "Mi nombre es: $this->nombre, y soy un/a $this->especie.";
+
+    public function altaAnimal($nombre, $especie, $edad) {
+        $sql = "INSERT INTO animales (nombre, especie, edad) VALUES ('$nombre', '$especie', '$edad')";
+        if ($this->dbConnection->query($sql) === TRUE) {
+            echo "Animal dado de alta correctamente.";
+        } else {
+            echo "Error al dar de alta el animal: " . $this->dbConnection->error;
+        }
     }
-    public function getEdad() {
-      return "Mi edad es: $this->edad.";
+
+    public function bajaAnimal($id) {
+        $sql = "DELETE FROM animales WHERE id = '$id'";
+        if ($this->dbConnection->query($sql) === TRUE) {
+            echo "Animal eliminado correctamente.";
+        } else {
+            echo "Error al eliminar el animal: " . $this->dbConnection->error;
+        }
     }
-  }
-?>
+
+    public function __destruct() {
+        $this->dbConnection->close();
+    }
+}
+$animalManager = new Animal();
+$animalManager->altaAnimal("Luna", "Gato", 3);
+$animalManager->bajaAnimal($id);
