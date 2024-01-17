@@ -8,7 +8,7 @@
     $birthday = htmlspecialchars(trim($_POST['birthday']));
 
     $conexion = new mysqli('localhost', 'denys', 'denys', 'php_db');
-    if ($conexion->connect_error) die("Error en la BBDD $conexion->connect_error");
+    if ($conexion->connect_error) echo json_encode(['success' => false, 'error' => 'Error en la BBDD ' . $conexion->connect_error]);
 
     $sql_user_existe = "SELECT id FROM user WHERE username = ? OR email = ?";//Selecciona a ver si hay un user asi.
     $query_user_existe = $conexion->prepare($sql_user_existe);
@@ -24,9 +24,9 @@
       $insert->bind_param("ssssss", $name, $lastname, $username, $password, $email, $birthday);
 
       echo ($insert->execute())? json_encode(['success' => true, 'message' => 'Usuario registrado exitosamente']) : 
-                                 json_encode(['success' => false, 'error' => $insert->error]);
+                                 json_encode(['success' => false, 'error' =>  ($insert->error)]);
       $insert->close();
     }
     $query_user_existe->close();
     $conexion->close();
-}
+  }
