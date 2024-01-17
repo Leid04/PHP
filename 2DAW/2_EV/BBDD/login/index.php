@@ -6,12 +6,12 @@
     <title>Login</title>
   </head>
   <body>
-    <form action="./loginOK.php" method="post" onsubmit="return enviar()">
+    <form action="" id="formulario" name="formulario" method="post" onsubmit="return enviar()">
       <label for="usuario">Usuario: </label>
         <input type="text" name="usuario" placeholder="Juan/juanito23"><br><br>
       <label for="password">Password: </label>
         <input type="text" name="password"><br><br>
-      <button type="submit">Enviar</button>
+      <button type="submit" id="submitBtn">Enviar</button
     </form>
   </body>
 </html>

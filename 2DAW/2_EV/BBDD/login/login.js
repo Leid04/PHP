@@ -1,21 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.querySelector("input[type=submit]");
+  const button = document.querySelector("#submitBtn");
+
   async function enviar() {
+    const usuario = document.querySelector("input[name=usuario]").value;
+    const password = document.querySelector("input[name=password]").value;
+
+    
     const options = {
       method: "POST",
-      header: { "Content-Type:": "application/json" },
-      body: new FormData(document.forms["formulario"]),
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({usuario: usuario, password: password}),
     };
+
     const getData = (data) => {
-      if (data.success) {
-        //Aqui los datos recuperados
-      } else {
-        alert("Error en para conectarse");
+      try {
+        const parsedData = JSON.parse(data);
+          if (parsedData.success) {
+            console.log('Login exitoso', parsedData);
+          } else {
+            console.error('Login fallido', parsedData);
+          }
+      } catch (error) {
+        console.error("Error al parsear la respuesta JSON", error);
       }
     };
+
     const getError = (er) => {
       console.log(`Error ${er.status}: ${er.statusText}`);
     };
+
     try {
       const response = await fetch("./loginOK.php", options);
       const data = await response.text();
@@ -24,5 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
       getError(er);
     }
   }
-  button.addEventListener("click", enviar());
+
+  button.addEventListener("click", enviar);
 });
