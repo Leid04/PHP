@@ -1,42 +1,23 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.querySelector("#submitBtn");
+async function envio() {
+  const formData = new FormData(document.forms["formulario"]);
+  const options = { method: 'POST', body: formData};
 
-  async function enviar() {
-    const usuario = document.querySelector("input[name=usuario]").value;
-    const password = document.querySelector("input[name=password]").value;
-
-    
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify({usuario: usuario, password: password}),
-    };
-
-    const getData = (data) => {
-      try {
-        const parsedData = JSON.parse(data);
-          if (parsedData.success) {
-            console.log('Login exitoso', parsedData);
-          } else {
-            console.error('Login fallido', parsedData);
-          }
-      } catch (error) {
-        console.error("Error al parsear la respuesta JSON", error);
-      }
-    };
-
-    const getError = (er) => {
-      console.log(`Error ${er.status}: ${er.statusText}`);
-    };
-
-    try {
-      const response = await fetch("./loginOK.php", options);
-      const data = await response.text();
-      getData(data);
-    } catch (er) {
-      getError(er);
+  const getError = (error) => console.error('Error en la solicitud:', error.message);
+  const getData = (data) => {
+    if (data.success) {
+      console.log('Inicio de sesión exitoso');
+      console.log('Datos del usuario:', data.data);
+    } else {
+      console.error('Error en el inicio de sesión:', data.error);
     }
-  }
+  };
 
-  button.addEventListener("click", enviar);
-});
+  try {
+    const response = await fetch("./loginOK.php", options);
+    const data = await response.json();
+    getData(data);
+  } catch (error) {
+    getError(error);
+  }
+}
+document.querySelector('#submitBtn').addEventListener('click', envio);

@@ -6,12 +6,13 @@
     <title>Login</title>
   </head>
   <body>
-    <form action="" id="formulario" name="formulario" method="post" onsubmit="return enviar()">
+    <form id="formulario" name="formulario" method="post">
       <label for="usuario">Usuario: </label>
-        <input type="text" name="usuario" placeholder="Juan/juanito23"><br><br>
+      <input type="text" name="usuario" placeholder="Juan/juanito23"><br><br>
       <label for="password">Password: </label>
-        <input type="text" name="password"><br><br>
-      <button type="submit" id="submitBtn">Enviar</button
+      <input type="text" name="password"><br><br>
+      <button type="button" id="submitBtn">Enviar</button>
     </form>
+    <script src="./login.js"></script>
   </body>
 </html>
