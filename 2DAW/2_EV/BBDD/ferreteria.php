@@ -25,13 +25,13 @@
           $direccion = htmlspecialchars(trim($_POST['dir']));
           $codigoPos = htmlspecialchars(trim($_POST['cp']));
 
-          $query = 'INSERT INTO ferreteria (name, address, cp) VALUES (?, ?, ?)';
+          $query = 'INSERT INTO store (name, address, cp) VALUES (?, ?, ?)';
           $stmt = $conn->prepare($query);
           $stmt->bind_param("ssi", $nombre, $direccion, $codigoPos);
           $resultado = $stmt->execute();
         } 
 
-        $sentencia = "SELECT id, name, address, cp FROM ferreteria";
+        $sentencia = "SELECT id, name, address, cp FROM store";
         $resultado = $conn->query($sentencia);
 
         if ($resultado->num_rows != 0) { 
