@@ -41,6 +41,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Dirección</th>
+                <th>Acción</th>
               </tr>
               <?php
                 while ($fila = $resultado->fetch_assoc()) {
@@ -48,6 +49,7 @@
                     echo "<td>{$fila['id']}</td>";
                     echo "<td>{$fila['name']}</td>";
                     echo "<td>{$fila['address']}</td>";
+                    echo "<td><a class='btn' href='ferreteriaProductos.php?id={$fila['id']}'>Ver productos</a></td>";
                   echo "</tr>";
                 }
               ?>
