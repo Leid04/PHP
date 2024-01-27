@@ -33,3 +33,8 @@ if ($datos = $conn->query($sql)) {
 } else { echo "Ha habido un error: " . $conn->error;}
 $conn->close();
 $datos->close();
+
+
+$insert = 'INSERT INTO Employee (EmployeeID, Salary) VALUES (1, "John")';
+$update = 'UPDATE Employee SET Salary = 65000.00 WHERE EmployeeID = 1';
+$delete = 'DELETE FROM Employee WHERE EmployeeID = 1;';
