@@ -68,7 +68,10 @@
               <?php while($datos = $sql->fetch(PDO::FETCH_OBJ)){ ?>
               <tr>
                 <th scope="row"><?= $datos->id ?></th>
-                <td>Mark</td>
+                <td scope="row">
+                  <img src="<?= $datos->photo ?>" alt="" width="80">
+                  
+                </td>
                 <td>
                   <a href="#" class="btn btn-warning btn-action">Editar</a>
                   <a href="#" class="btn btn-secondary btn-action">Eliminar</a>
