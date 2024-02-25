@@ -1,92 +1,59 @@
 <?php
+function listarUser(){
+  require_once('./config.php');
+  $sql = "SELECT username, photo FROM users";
+  $stmt = $pdo->prepare($sql);
+  $resultado = $stmt->execute();
 
-$dns = "mysql:host=localhost;dbname=user";
-$user = "denys";
-$pass = "denys";
-$pdo = new PDO($dns, $user, $pass);
-
-function listarUser($id){
-  try{
-    global $pdo;
-
-    $datos = [":id" => $id];
-    
-    $sql = "SELECT nickname, photo, photo_type FROM user WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($datos);
-
-    $users = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($users){
-      echo "<p>nickname: {$users['nickname']}</p>";
-      if (!empty($users['photo'])) {
-        echo "<img src='mostrar_imagen.php?id={$id}'/>";
-      }
+  if($resultado){
+    while($datos = $stmt->fetch(PDO::FETCH_ASSOC)){
+      echo "<p>Nickname: {$datos['username']}.</p> <br>";
+      $imagen = ($datos['photo'] === null)? "default.png" : $datos['photo'];
+      echo "<img src='{$imagen}' width='80' />";
     }
-
-  }catch(PDOException $e){ 
-    echo $e->getMessage(); 
-    return;
   }
-}
-
-function obtenerFoto($id){
-  //Devolver la imagen del usuario
 }
 
 function crearUser(){
-  global $pdo;
-  $name = htmlspecialchars(trim($_POST['name']));
-  $email = htmlspecialchars(trim($_POST['email']));
-  $pass = htmlspecialchars(trim($_POST['pass']));
+  if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $name  = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $pass  = htmlspecialchars(trim($_POST['pass']));
 
-  if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-    $imgContenido = file_get_contents($_FILES['imagen']['tmp_name']);
-    $imgTipo = $_FILES['imagen']['type'];
-  } else { 
-    $imgContenido = null; 
-    $imgTipo = null;
+    $imagen     = ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) ? $_FILES['imagen']['tmp_name'] : null;
+    $imagenTam  = $_FILES['imagen']['size'];
+    $imagenTipo = ($imagen !== null) ? pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION) : null;
+
+    if (($imagenTipo == 'png' || $imagenTipo == 'jpg') && $imagenTam <= 1048576 || $imagen == null) {
+      require_once('./config.php');
+      $sql = "INSERT INTO users (username, email, password, photo) VALUES(:u, :e, :pass, :photo)";
+
+      if ($imagen) {
+        $imagenRecorte = imagecreatefromstring(file_get_contents($imagen));
+        $imagenRecorte = imagecrop($imagenRecorte, ['x' => 0, 'y' => 0, 'width' => 400, 'height' => 400]);
+        ob_start();
+        imagepng($imagenRecorte);
+        $imagenRecorte = ob_get_clean();
+      } else { $imagenRecorte = null; }
+
+      $datos = [
+        ":u"     => $name, 
+        ":e"     => $email,
+        ":pass"  => $pass,
+        ":photo" => $imagenRecorte
+      ];
+      $stmt = $pdo->prepare($sql);
+      if ($stmt === false) {
+        echo "Error en la preparación de la consulta";
+      } else {
+        $resultado = $stmt->execute($datos);
+        if ($resultado !== false) {
+          echo "Subida bien la imagen";
+          header("Location: ./listarUser.php");
+        } else {
+          echo "Error en la subida";
+        }
+      }
+    }
   }
-
-  try{
-    $datos = [
-      ":name" => $name,
-      ":email" => $email,
-      ":pass" => $pass,
-      ":photo" => $imgContenido,
-      ":photo_type" => $imgTipo
-    ];
-    $sql = "INSERT INTO user (nickname, email, password, photo, photo_type) VALUES (:name, :email, :pass, :photo, :photo_type)";
-
-    $stmt = $pdo->prepare($sql);
-    $res = $stmt->execute($datos);
-
-    echo ($res)? ((!empty($imgContenido))? "Subido con la imagen" : "Subido sin la imagen") : "Error al subir";
-
-  }catch(PDOException $e){ echo $e->getMessage(); }
 }
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-  crearUser();
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario</title>
-  </head>
-  <body>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST" enctype="multipart/form-data">
-      <label for="name">Nombre:</label>
-        <input type="text" name="name" placeholder="Denys"><br><br>
-      <label for="email">Email:</label>
-        <input type="email" name="email" placeholder="denys.msi04@gmail.com"><br><br>
-      <label for="pass">Password:</label>
-        <input type="password" name="pass"><br><br>
-      <label for="imagen">Imagen:</label>
-        <input type="file" name="imagen"><br><br>
-      <button type="submit">Enviar</button>
-    </form>
-  </body>
-</html>

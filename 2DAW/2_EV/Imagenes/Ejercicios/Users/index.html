@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario</title>
+  </head>
+  <body>
+    <form action="./listarUser.php" method="POST" enctype="multipart/form-data">
+      <label for="name">Nombre:</label>
+      <input type="text" name="name" placeholder="Denys" /><br /><br />
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="denys.msi04@gmail.com"
+      /><br /><br />
+      <label for="pass">Password:</label>
+      <input type="password" name="pass" /><br /><br />
+      <label for="imagen">Imagen:</label>
+      <input type="file" name="imagen" /><br /><br />
+      <button type="submit">Enviar</button>
+    </form>
+  </body>
+</html>

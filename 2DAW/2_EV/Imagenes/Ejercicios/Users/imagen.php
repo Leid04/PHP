@@ -9,4 +9,4 @@ imagestring($im, 30, 50, 100, 'Hello world!', $textcolor);
 // Output the image
 header('Content-type: image/png');
 imagepng($im);
-imagedestroy($im);
+
