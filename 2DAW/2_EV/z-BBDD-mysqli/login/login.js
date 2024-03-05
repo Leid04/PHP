@@ -6,18 +6,18 @@ async function envio() {
   const getData = (data) => {
     if (data.success) {
       console.log('Inicio de sesión exitoso');
-      console.log('Datos del usuario:', data.message);
+      console.log('Datos del usuario:', data.data);
     } else {
       console.error('Error en el inicio de sesión:', data.error);
     }
   };
 
   try {
-    const response = await fetch("./backend/registroOK.php", options);
+    const response = await fetch("./loginOK.php", options);
     const data = await response.json();
     getData(data);
   } catch (error) {
     getError(error);
   }
 }
-document.querySelector('#envio').addEventListener('click', envio);
+document.querySelector('#submitBtn').addEventListener('click', envio);

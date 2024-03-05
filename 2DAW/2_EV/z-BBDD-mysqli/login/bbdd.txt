@@ -1,0 +1,21 @@
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    lastname VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255)
+);  
+
+
+
+INSERT INTO user (name, lastname, email, password) 
+VALUES ('Juan', 'Pérez', 'juan@example.com', 'password123');
+
+INSERT INTO user (name, lastname, email, password) 
+VALUES ('María', 'García', 'maria@example.com', 'securepass');
+
+INSERT INTO user (name, lastname, email, password) 
+VALUES ('Carlos', 'Martínez', 'carlos@example.com', '123456');
+
+INSERT INTO user (name, lastname, email, password) 
+VALUES ('Laura', 'López', 'laura@example.com', 'qwerty');
