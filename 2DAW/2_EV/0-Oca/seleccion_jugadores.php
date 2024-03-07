@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-  <meta charset="UTF-8">
-  <meta name="author" content="Denys Revutskyi">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selección de jugadores</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="author" content="Denys Revutskyi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de jugadores</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div id="main">
@@ -28,9 +28,7 @@
             echo "<input type='color' list='colores[$i]' name='bgColor[$i]'>";
             
               echo "<datalist id='colores[$i]'>";
-                foreach (COLORES as $value) {
-                  echo "<option value='$value'>$value</option>";
-                }
+                foreach (COLORES as $value) { echo "<option value='$value'>$value</option>"; }
               echo "</datalist><br><br>";
           }
         ?>
